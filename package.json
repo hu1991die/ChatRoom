@@ -1,0 +1,14 @@
+{
+  "name": "socketio",
+  "version": "1.0.0",
+  "description": "this is a project about socketio...",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "feizi",
+  "license": "ISC",
+  "dependencies": {
+    "socket.io": "^1.3.5"
+  }
+}

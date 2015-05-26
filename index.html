@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Socket.IO chat</title>
+		
+		<style type="text/css">
+			* {
+				margin: 0;
+				padding: 0;
+				box-sizing: border-box;
+			}
+			body {
+				font: 13px Helvetica, Arial;
+			}
+			#form {
+				background: #000;
+				padding: 3px;
+				position: fixed;
+				bottom: 0;
+				width: 100%;
+			}
+			#form input {
+				border: 0;
+				padding: 10px;
+				width: 90%;
+				margin-right: .5%;
+			}
+			#form button {
+				width: 9%;
+				background: rgb(130, 224, 255);
+				border: none;
+				padding: 10px;
+			}
+			#messages {
+				list-style-type: none;
+				margin: 0;
+				padding: 0;
+			}
+			#messages li {
+				padding: 5px 10px;
+			}
+			#messages li:nth-child(odd) {
+				background: #eee;
+			}
+		</style>
+		<!--
+        	作者：347431996@qq.com
+        	时间：2015-05-26
+        	描述：import socket.io lib and jQUery lib
+        -->
+        <script src="http://labfile.oss.aliyuncs.com/socketio/socket.io-1.2.1.js" type="text/javascript" charset="utf-8"></script>
+        <script src="http://code.jquery.com/jquery-1.11.1.js" type="text/javascript" charset="utf-8"></script>
+        
+        <script type="text/javascript">
+			// connecting Socket.IO server
+			var socket = io.connect();
+			
+			$(function(){
+				//bind send event to the button of sending message
+				$("#send").on('click',function(){
+					var data = $('#mess').val();
+					
+					//create chat event and send message to server
+					//emit('event') show that sended a event command
+					//use io.on('event') to receive the event message
+					//so client server need to use socket.on('chat') to receive chating message
+					socket.emit('chat',{msg:data});
+					
+					//clear the message box
+					$('#mess').val('');
+				});
+				
+				//receive message and show in the message record box
+				socket.on('sendmsg',function(msg){
+					$('#messages').append($('<li>').text(msg.msg));
+				});
+			});
+        </script>
+	</head>
+	<body>
+		<!-- show message record -->
+		<ul id="messages"></ul>
+		
+		<!-- the box of sending message -->
+		<div id="form">
+			<input id="mess" autocomplete="off"/>
+			<button id="send">Send</button>
+		</div>
+	</body>
+</html>
